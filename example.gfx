@@ -1,0 +1,52 @@
+# bitsize 8 for displays W<256 & H<256. 16 otherwise
+SETBITSIZE8
+
+# inline void setRotate(bool rotate);
+SETROTATEON
+SETROTATEOFF
+
+# inline void setFlip(bool flip);
+SETFLIPON
+SETFLIPOFF
+
+# inline void setBrightness(uint8_t brightness);
+SETBRIGHTNESS 200
+
+# display();
+DISPLAY
+
+# delay(ms) the value is multiplied by 100, so 1 = 100ms, 30 = 3s
+DELAY 30
+
+# clearDisplay();
+CLEARDISPLAY
+
+# color mode: commands with color at the end must not specify it and will use this color
+SETCOLOR 0x22FF33
+
+# restore normal mode
+CLEARCOLOR
+
+# fillScreen(uint16_t color);
+FILLSCREEN 0x223366
+
+# inline void drawPixel(int16_t x, int16_t y, uint16_t color);
+DRAWPIXEL 16 35 0xFFFFFF
+
+# void drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t color);
+DRAWLINE 23 32 13 1 0x22FF33
+
+# void drawFastVLine(uint16_t x0, uint16_t y0, uint16_t length, uint16_t color);
+DRAWFASTVLINE 0 5 30 0x11FF33
+
+# void drawFastHLine(uint8_t x0, uint8_t y0, uint8_t length, uint16_t color);
+DRAWFASTHLINE 10 10 30 0x11AA33
+
+# void drawRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color);
+# void fillRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color);
+# void drawCircle(uint16_t x0, uint16_t y0, uint16_t r, uint16_t color);
+# void fillCircle(uint16_t x0, uint16_t y0, uint16_t r, uint16_t color);
+# void drawRoundRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t radius, uint16_t color);
+# void fillRoundRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t radius, uint16_t color);
+# void drawTriangle(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+# void fillTriangle(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
