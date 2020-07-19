@@ -15,7 +15,7 @@ func TestBufferedDisplay(t *testing.T) {
 	display.SetColor(&color.Color{0, 0xF1, 0xA3})
 	display.DrawPixel(1, 5, nil)
 	display.Display()
-	display.Delay(5)
+	display.Delay10MS(5)
 	display.DrawTriangle(1, 1, 10, 10, 10, 1, nil)
 	/*r := bytes.NewReader(display.Buffer.Bytes())
 	var w io.Writer = os.Stdout

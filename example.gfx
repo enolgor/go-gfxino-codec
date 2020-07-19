@@ -15,8 +15,8 @@ SETBRIGHTNESS 200
 # display();
 DISPLAY
 
-# delay(ms) the value is multiplied by 100, so 1 = 100ms, 30 = 3s
-DELAY 30
+# delay(ms) the value is multiplied by 10, so 1 = 10ms, 100 = 1s
+DELAY10MS 30
 
 # clearDisplay();
 CLEARDISPLAY

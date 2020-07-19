@@ -43,8 +43,18 @@ func (bd *BufferedDisplay) Display() {
 	bd.Buffer.WriteByte(byte(commands.DISPLAY))
 }
 
-func (bd *BufferedDisplay) Delay(t uint8) {
-	bd.Buffer.WriteByte(byte(commands.DELAY))
+func (bd *BufferedDisplay) Delay10MS(t uint8) {
+	bd.Buffer.WriteByte(byte(commands.DELAY10MS))
+	bd.Buffer.WriteByte(byte(t))
+}
+
+func (bd *BufferedDisplay) Delay1S(t uint8) {
+	bd.Buffer.WriteByte(byte(commands.DELAY1S))
+	bd.Buffer.WriteByte(byte(t))
+}
+
+func (bd *BufferedDisplay) Delay1M(t uint8) {
+	bd.Buffer.WriteByte(byte(commands.DELAY1M))
 	bd.Buffer.WriteByte(byte(t))
 }
 
