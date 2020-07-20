@@ -181,7 +181,7 @@ func (bd *BufferedDisplay) FillTriangle(x1, y1, x2, y2, x3, y3 uint16, c *color.
 	bd.writeSkippableColor(c)
 }
 
-func (bd *BufferedDisplay) SetTextWrapON(textWrap bool) {
+func (bd *BufferedDisplay) SetTextWrap(textWrap bool) {
 	if textWrap {
 		bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPON))
 	} else {
