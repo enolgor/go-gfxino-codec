@@ -12,6 +12,10 @@ type Color struct {
 	B uint8
 }
 
+func FromRGB(rgb uint32) *Color {
+	return &Color{R: uint8(rgb >> 16), G: uint8(rgb >> 8), B: uint8(rgb)}
+}
+
 func FromString(str string) (*Color, error) {
 	if strings.Index(str, ",") != -1 {
 		return fromRGBString(str)

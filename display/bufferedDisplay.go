@@ -186,6 +186,31 @@ func (bd *BufferedDisplay) FillTriangle(x1, y1, x2, y2, x3, y3 uint16, c *color.
 	bd.writeSkippableColor(c)
 }
 
+func (bd *BufferedDisplay) SetTextWrapON() {
+	bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPON))
+}
+
+func (bd *BufferedDisplay) SetTextWrapOFF() {
+	bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPOFF))
+}
+
+func (bd *BufferedDisplay) SetCursor(x, y uint16) {
+	bd.Buffer.WriteByte(byte(commands.SETCURSOR))
+	bd.writeUint(x)
+	bd.writeUint(y)
+}
+
+func (bd *BufferedDisplay) SetTextSize(x uint8) {
+	bd.Buffer.WriteByte(byte(commands.SETTEXTSIZE))
+	bd.Buffer.WriteByte(byte(x))
+}
+
+func (bd *BufferedDisplay) SetTextColor(fg *color.Color, bg *color.Color) {
+	bd.Buffer.WriteByte(byte(commands.SETTEXTCOLOR))
+	bd.writeColor(fg)
+	bd.writeColor(bg)
+}
+
 func (bd *BufferedDisplay) Print(text string) {
 	bd.Buffer.WriteByte(byte(commands.PRINT))
 	bd.writeText(text)
