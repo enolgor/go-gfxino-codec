@@ -31,5 +31,6 @@ type Display interface {
 	FillRoundRect(x, y, w, h, r uint16, color *color.Color)
 	DrawTriangle(x1, y1, x2, y2, x3, y3 uint16, color *color.Color)
 	FillTriangle(x1, y1, x2, y2, x3, y3 uint16, color *color.Color)
+	Print(text string)
 	Read(p []byte) (int, error)
 }

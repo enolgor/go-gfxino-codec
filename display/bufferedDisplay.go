@@ -5,6 +5,7 @@ import (
 
 	"github.com/enolgor/go-gfxino-codec/color"
 	"github.com/enolgor/go-gfxino-codec/commands"
+	"github.com/enolgor/go-gfxino-codec/text"
 )
 
 type BufferedDisplay struct {
@@ -185,6 +186,11 @@ func (bd *BufferedDisplay) FillTriangle(x1, y1, x2, y2, x3, y3 uint16, c *color.
 	bd.writeSkippableColor(c)
 }
 
+func (bd *BufferedDisplay) Print(text string) {
+	bd.Buffer.WriteByte(byte(commands.PRINT))
+	bd.writeText(text)
+}
+
 func (bd *BufferedDisplay) writeUint(v uint16) {
 	if !bd.bitSize8 {
 		bd.Buffer.WriteByte(byte(v >> 8))
@@ -203,6 +209,15 @@ func (bd *BufferedDisplay) writeSkippableColor(c *color.Color) {
 		return
 	}
 	bd.writeColor(c)
+}
+
+func (bd *BufferedDisplay) writeText(txt string) {
+	encoded := text.EncodeCP437(txt)
+	if len(encoded) > 255 {
+		encoded = encoded[:255]
+	}
+	bd.Buffer.WriteByte(byte(len(encoded)))
+	bd.Buffer.Write(encoded)
 }
 
 func (bd *BufferedDisplay) Read(p []byte) (int, error) {
