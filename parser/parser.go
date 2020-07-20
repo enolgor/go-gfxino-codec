@@ -15,7 +15,7 @@ type Parser struct {
 
 func (p *Parser) Parse(reader io.Reader, writer io.Writer) error {
 	var buf bytes.Buffer
-	lineBuffer := make([]byte, 16)
+	lineBuffer := make([]byte, 256)
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		line := scanner.Text()

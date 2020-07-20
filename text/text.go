@@ -17,3 +17,11 @@ func EncodeCP437(s string) []byte {
 	}
 	return buf.Bytes()
 }
+
+func DecodeCP437(bslice []byte) string {
+	buf := bytes.Buffer{}
+	for _, b := range bslice {
+		buf.WriteRune(cp437.DecodeByte(b))
+	}
+	return buf.String()
+}

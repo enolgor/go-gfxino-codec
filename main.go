@@ -8,7 +8,6 @@ import (
 
 	"github.com/enolgor/go-gfxino-codec/interpreter"
 	"github.com/enolgor/go-gfxino-codec/parser"
-	"github.com/enolgor/go-gfxino-codec/text"
 )
 
 const usageMessage = `
@@ -64,10 +63,6 @@ func init() {
 }
 
 func main() {
-	s := "this is some string 😀"
-	fmt.Printf("% X\n", s)
-	fmt.Printf("% X\n", text.EncodeCP437(s))
-	os.Exit(0)
 	if len(os.Args) == 1 {
 		fmt.Fprint(os.Stderr, usageMessage)
 		os.Exit(1)

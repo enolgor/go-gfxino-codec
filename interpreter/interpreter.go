@@ -20,7 +20,7 @@ type Interpreter struct {
 
 func (ip *Interpreter) Interpret(r io.Reader, w io.Writer) error {
 	br := bufio.NewReader(r)
-	lineBuffer := make([]byte, 16)
+	lineBuffer := make([]byte, 256)
 	for {
 		if err := ip.writeLine(br, w, lineBuffer); err != nil {
 			if err == errBufferEmtpy {

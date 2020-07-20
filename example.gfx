@@ -51,4 +51,4 @@ DRAWFASTHLINE 10 10 30 0x11AA33
 # void drawTriangle(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
 # void fillTriangle(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
 
-PRINT hola que tal
+PRINT hola que tal this is a ver long text example to overflow the buffer
