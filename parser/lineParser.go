@@ -58,6 +58,8 @@ func (p *Parser) writeArg(i int, buf []byte, val string, arg uint8) (int, error)
 		return writeUint16(i, buf, val)
 	case commands.UINT:
 		return writeUint(i, buf, val, p.mode8Bit)
+	case commands.INT16:
+		return writeInt16(i, buf, val)
 	case commands.COLOR:
 		return writeColor(i, buf, val)
 	case commands.COLOR_SKIPPABLE:
@@ -86,6 +88,16 @@ func writeUint8(i int, buf []byte, val string) (int, error) {
 
 func writeUint16(i int, buf []byte, val string) (int, error) {
 	v, err := strconv.ParseUint(val, 0, 16)
+	if err != nil {
+		return -1, err
+	}
+	buf[i] = byte((v >> 8) & 0xFF)
+	buf[i+1] = byte(v & 0xFF)
+	return 2, nil
+}
+
+func writeInt16(i int, buf []byte, val string) (int, error) {
+	v, err := strconv.ParseInt(val, 0, 16)
 	if err != nil {
 		return -1, err
 	}

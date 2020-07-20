@@ -106,6 +106,15 @@ func readNextUint8(i int, buf []byte) (int, string, error) {
 	return 1, fmt.Sprintf("%d", v), nil
 }
 
+func readNextInt16(i int, buf []byte) (int, string, error) {
+	var v int16
+	if len(buf)-i < 2 {
+		return -1, "", fmt.Errorf("Buf rem size smaller than 2")
+	}
+	v = int16(buf[i])<<8 | int16(buf[i+1])
+	return 2, fmt.Sprintf("%d", v), nil
+}
+
 func readNextSkippableColor(i int, buf []byte, writeColorMode int, colorMode bool) (int, string, error) {
 	if !colorMode {
 		return readNextColor(i, buf, writeColorMode)

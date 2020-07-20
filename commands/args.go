@@ -4,6 +4,7 @@ const (
 	UINT8 uint8 = iota
 	UINT16
 	UINT
+	INT16
 	COLOR
 	COLOR_SKIPPABLE
 	TEXT
@@ -38,7 +39,7 @@ var CommandArgsMap map[uint8][]uint8 = map[uint8][]uint8{
 	FILLTRIANGLE:   {UINT, UINT, UINT, UINT, UINT, UINT, COLOR_SKIPPABLE},
 	SETTEXTWRAPON:  {},
 	SETTEXTWRAPOFF: {},
-	SETCURSOR:      {UINT, UINT},
+	SETCURSOR:      {INT16, INT16},
 	SETTEXTSIZE:    {UINT8},
 	SETTEXTCOLOR:   {COLOR, COLOR},
 	PRINT:          {TEXT},
@@ -66,6 +67,8 @@ func GetArgSize(cmd uint8, mode8bit bool, skipColor bool) int {
 			} else {
 				s += 2
 			}
+		case INT16:
+			s += 2
 		case TEXT:
 			s += 0
 		}
