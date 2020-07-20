@@ -9,30 +9,25 @@ import (
 )
 
 type BufferedDisplay struct {
-	bitSize8 bool
 	colorSet bool
 	Buffer   bytes.Buffer
+	Mode8Bit bool
 }
 
-func (bd *BufferedDisplay) SetBitSize8() {
-	bd.Buffer.WriteByte(byte(commands.SETBITSIZE8))
-	bd.bitSize8 = true
+func (bd *BufferedDisplay) SetRotate(rotate bool) {
+	if rotate {
+		bd.Buffer.WriteByte(byte(commands.SETROTATEON))
+	} else {
+		bd.Buffer.WriteByte(byte(commands.SETROTATEOFF))
+	}
 }
 
-func (bd *BufferedDisplay) SetRotateON() {
-	bd.Buffer.WriteByte(byte(commands.SETROTATEON))
-}
-
-func (bd *BufferedDisplay) SetRotateOFF() {
-	bd.Buffer.WriteByte(byte(commands.SETROTATEOFF))
-}
-
-func (bd *BufferedDisplay) SetFlipON() {
-	bd.Buffer.WriteByte(byte(commands.SETFLIPON))
-}
-
-func (bd *BufferedDisplay) SetFlipOFF() {
-	bd.Buffer.WriteByte(byte(commands.SETFLIPOFF))
+func (bd *BufferedDisplay) SetFlip(flip bool) {
+	if flip {
+		bd.Buffer.WriteByte(byte(commands.SETFLIPON))
+	} else {
+		bd.Buffer.WriteByte(byte(commands.SETFLIPOFF))
+	}
 }
 
 func (bd *BufferedDisplay) SetBrightness(brightness uint8) {
@@ -186,12 +181,12 @@ func (bd *BufferedDisplay) FillTriangle(x1, y1, x2, y2, x3, y3 uint16, c *color.
 	bd.writeSkippableColor(c)
 }
 
-func (bd *BufferedDisplay) SetTextWrapON() {
-	bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPON))
-}
-
-func (bd *BufferedDisplay) SetTextWrapOFF() {
-	bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPOFF))
+func (bd *BufferedDisplay) SetTextWrapON(textWrap bool) {
+	if textWrap {
+		bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPON))
+	} else {
+		bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPOFF))
+	}
 }
 
 func (bd *BufferedDisplay) SetCursor(x, y int16) {
@@ -217,7 +212,7 @@ func (bd *BufferedDisplay) Print(text string) {
 }
 
 func (bd *BufferedDisplay) writeUint(v uint16) {
-	if !bd.bitSize8 {
+	if !bd.Mode8Bit {
 		bd.Buffer.WriteByte(byte(v >> 8))
 	}
 	bd.Buffer.WriteByte(byte(v & 0xFF))
@@ -257,7 +252,7 @@ func (bd *BufferedDisplay) Read(p []byte) (int, error) {
 		if err != nil {
 			return n, err //io.EOF
 		}
-		size := commands.GetArgSize(cmd, bd.bitSize8, bd.colorSet)
+		size := commands.GetArgSize(cmd, bd.Mode8Bit, bd.colorSet)
 		if size+1+n > len(p) {
 			bd.Buffer.UnreadByte()
 			return n, nil

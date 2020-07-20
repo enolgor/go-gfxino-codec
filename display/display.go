@@ -5,11 +5,8 @@ import (
 )
 
 type Display interface {
-	SetBitSize8()
-	SetRotateON()
-	SetRotateOFF()
-	SetFlipON()
-	SetFlipOFF()
+	SetRotate(rotate bool)
+	SetFlip(flip bool)
 	SetBrightness(brightness uint8)
 	Display()
 	Delay10MS(t uint8)
@@ -31,8 +28,7 @@ type Display interface {
 	FillRoundRect(x, y, w, h, r uint16, color *color.Color)
 	DrawTriangle(x1, y1, x2, y2, x3, y3 uint16, color *color.Color)
 	FillTriangle(x1, y1, x2, y2, x3, y3 uint16, color *color.Color)
-	SetTextWrapON()
-	SetTextWrapOFF()
+	SetTextWrap(textWrap bool)
 	SetCursor(x, y int16)
 	SetTextSize(x uint8)
 	SetTextColor(fg *color.Color, bg *color.Color)

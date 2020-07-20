@@ -10,8 +10,7 @@ import (
 )
 
 func TestBufferedDisplay(t *testing.T) {
-	display := BufferedDisplay{}
-	display.SetBitSize8()
+	display := BufferedDisplay{Mode8Bit: true}
 	display.SetColor(&color.Color{0, 0xF1, 0xA3})
 	display.DrawPixel(1, 5, nil)
 	display.Display()
