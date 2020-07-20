@@ -33,7 +33,7 @@ type Display interface {
 	FillTriangle(x1, y1, x2, y2, x3, y3 uint16, color *color.Color)
 	SetTextWrapON()
 	SetTextWrapOFF()
-	SetCursor(x, y uint16)
+	SetCursor(x, y int16)
 	SetTextSize(x uint8)
 	SetTextColor(fg *color.Color, bg *color.Color)
 	Print(text string)

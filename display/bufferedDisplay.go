@@ -194,10 +194,10 @@ func (bd *BufferedDisplay) SetTextWrapOFF() {
 	bd.Buffer.WriteByte(byte(commands.SETTEXTWRAPOFF))
 }
 
-func (bd *BufferedDisplay) SetCursor(x, y uint16) {
+func (bd *BufferedDisplay) SetCursor(x, y int16) {
 	bd.Buffer.WriteByte(byte(commands.SETCURSOR))
-	bd.writeUint(x)
-	bd.writeUint(y)
+	bd.writeInt(x)
+	bd.writeInt(y)
 }
 
 func (bd *BufferedDisplay) SetTextSize(x uint8) {
@@ -217,6 +217,13 @@ func (bd *BufferedDisplay) Print(text string) {
 }
 
 func (bd *BufferedDisplay) writeUint(v uint16) {
+	if !bd.bitSize8 {
+		bd.Buffer.WriteByte(byte(v >> 8))
+	}
+	bd.Buffer.WriteByte(byte(v & 0xFF))
+}
+
+func (bd *BufferedDisplay) writeInt(v int16) {
 	if !bd.bitSize8 {
 		bd.Buffer.WriteByte(byte(v >> 8))
 	}
