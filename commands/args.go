@@ -6,6 +6,7 @@ const (
 	UINT
 	COLOR
 	COLOR_SKIPPABLE
+	TEXT
 )
 
 var CommandArgsMap map[uint8][]uint8 = map[uint8][]uint8{
@@ -35,6 +36,7 @@ var CommandArgsMap map[uint8][]uint8 = map[uint8][]uint8{
 	FILLROUNDRECT: {UINT, UINT, UINT, UINT, UINT, COLOR_SKIPPABLE},
 	DRAWTRIANGLE:  {UINT, UINT, UINT, UINT, UINT, UINT, COLOR_SKIPPABLE},
 	FILLTRIANGLE:  {UINT, UINT, UINT, UINT, UINT, UINT, COLOR_SKIPPABLE},
+	PRINT:         {UINT8, TEXT},
 }
 
 func GetArgSize(cmd uint8, mode8bit bool, skipColor bool) int {
@@ -59,7 +61,8 @@ func GetArgSize(cmd uint8, mode8bit bool, skipColor bool) int {
 			} else {
 				s += 2
 			}
-
+		case TEXT:
+			s += 0
 		}
 	}
 	return s

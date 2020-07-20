@@ -27,6 +27,7 @@ const (
 	FILLROUNDRECT
 	DRAWTRIANGLE
 	FILLTRIANGLE
+	PRINT
 )
 
 var InstructionForwardMap map[uint8]string = map[uint8]string{
@@ -56,6 +57,16 @@ var InstructionForwardMap map[uint8]string = map[uint8]string{
 	FILLROUNDRECT: "FILLROUNDRECT",
 	DRAWTRIANGLE:  "DRAWTRIANGLE",
 	FILLTRIANGLE:  "FILLTRIANGLE",
+	PRINT:         "PRINT",
 }
 
 var InstructionReverseMap map[string]uint8
+
+func IsTextCommand(cmd byte) bool {
+	switch cmd {
+	case PRINT:
+		return true
+	default:
+		return false
+	}
+}
