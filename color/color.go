@@ -2,6 +2,7 @@ package color
 
 import (
 	"fmt"
+	"image/color"
 	"math"
 	"strconv"
 	"strings"
@@ -52,6 +53,15 @@ func parseRGBHexString(hexStr string) (*Color, error) {
 	g := uint8((hex >> 8) & 0xFF)
 	b := uint8((hex >> 0) & 0xFF)
 	return &Color{R: r, G: g, B: b}, nil
+}
+
+func FromColor(c color.Color) *Color {
+	r, g, b, _ := c.RGBA() // investigar...
+	return &Color{
+		R: uint8(r),
+		G: uint8(g),
+		B: uint8(b),
+	}
 }
 
 func From565(c uint16) *Color {

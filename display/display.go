@@ -1,6 +1,8 @@
 package display
 
 import (
+	"image"
+
 	"github.com/enolgor/go-gfxino-codec/color"
 )
 
@@ -35,4 +37,13 @@ type Display interface {
 	Print(text string)
 	PrintBytes(text []byte)
 	Read(p []byte) (int, error)
+}
+
+func DrawImage(display Display, x0, y0 uint16, im image.Image) {
+	bounds := im.Bounds()
+	for x := uint16(bounds.Min.X); x < uint16(bounds.Max.X); x++ {
+		for y := uint16(bounds.Min.Y); y < uint16(bounds.Max.Y); y++ {
+			display.DrawPixel(x0+x, y0+y, color.FromColor(im.At(int(x), int(y))))
+		}
+	}
 }
