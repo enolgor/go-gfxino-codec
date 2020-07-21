@@ -133,7 +133,7 @@ func readNextColor(i int, buf []byte, writeColorMode int) (int, string, error) {
 	case COLOR_RGB:
 		return 2, c.ToRGBString(), nil
 	case COLOR_HEX:
-		return 2, c.ToHexString(), nil
+		return 2, c.ToRGBHexString(), nil
 	default:
 		return 2, c.ToRGBString(), nil
 	}

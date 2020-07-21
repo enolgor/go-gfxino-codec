@@ -2,6 +2,7 @@ package color
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -12,18 +13,14 @@ type Color struct {
 	B uint8
 }
 
-func FromRGB(rgb uint32) *Color {
-	return &Color{R: uint8(rgb >> 16), G: uint8(rgb >> 8), B: uint8(rgb)}
-}
-
-func FromString(str string) (*Color, error) {
+func ParseRGB(str string) (*Color, error) {
 	if strings.Index(str, ",") != -1 {
-		return fromRGBString(str)
+		return parseRGBString(str)
 	}
-	return fromHexString(str)
+	return parseRGBHexString(str)
 }
 
-func fromRGBString(rgbStr string) (*Color, error) {
+func parseRGBString(rgbStr string) (*Color, error) {
 	vals := strings.Split(rgbStr, ",")
 	if len(vals) != 3 {
 		return nil, fmt.Errorf("Invalid format. Should be R,G,B")
@@ -46,7 +43,7 @@ func fromRGBString(rgbStr string) (*Color, error) {
 	return &c, nil
 }
 
-func fromHexString(hexStr string) (*Color, error) {
+func parseRGBHexString(hexStr string) (*Color, error) {
 	hex, err := strconv.ParseUint(hexStr, 0, 32)
 	if err != nil {
 		return nil, err
@@ -65,7 +62,11 @@ func From565(c uint16) *Color {
 	}
 }
 
-func (c *Color) ToHexString() string {
+func FromRGB(rgb uint32) *Color {
+	return &Color{R: uint8(rgb >> 16), G: uint8(rgb >> 8), B: uint8(rgb)}
+}
+
+func (c *Color) ToRGBHexString() string {
 	hex := (uint32(c.R) << 16) | (uint32(c.G) << 8) | uint32(c.B)
 	return fmt.Sprintf("0x%X", hex)
 }
@@ -76,4 +77,51 @@ func (c *Color) ToRGBString() string {
 
 func (c *Color) To565() uint16 {
 	return ((uint16(c.R) & 0xF8) << 8) | ((uint16(c.G) & 0xFC) << 3) | (uint16(c.B) >> 3)
+}
+
+// HSV
+
+func FromHSV(H, S, V uint) *Color {
+	if H > 360 {
+		H = 360
+	}
+	if S > 100 {
+		S = 100
+	}
+	if V > 100 {
+		V = 100
+	}
+	h := float64(H)
+	s := float64(S) / 100
+	v := float64(V) / 100
+
+	hi := H / 60
+	f := h/60 - float64(hi)
+	p := v * (1 - s)
+	q := v * (1 - f*s)
+	t := v * (1 - (1-f)*s)
+
+	maxRGB := func(r, g, b float64) *Color {
+		return &Color{
+			R: uint8(math.Round(r * 255)),
+			G: uint8(math.Round(g * 255)),
+			B: uint8(math.Round(b * 255)),
+		}
+	}
+
+	switch hi {
+	case 0:
+		return maxRGB(v, t, p)
+	case 1:
+		return maxRGB(q, v, p)
+	case 2:
+		return maxRGB(p, v, t)
+	case 3:
+		return maxRGB(p, q, v)
+	case 4:
+		return maxRGB(t, p, v)
+	case 5:
+		return maxRGB(v, p, q)
+	}
+	return maxRGB(0, 0, 0)
 }

@@ -10,17 +10,17 @@ func TestParse(t *testing.T) {
 	c1 := Color{R: 171, G: 37, B: 243}
 	c2 := "0xAB25F3"
 	c3 := "171,37,243"
-	if c1.ToHexString() != c2 {
+	if c1.ToRGBHexString() != c2 {
 		t.Error("c1 to hexstring != c2")
 	}
-	c, e := FromString(c2)
+	c, e := ParseRGB(c2)
 	if e != nil {
 		t.Error(e)
 	}
 	if !reflect.DeepEqual(*c, c1) {
 		t.Error("c2 from string != c1")
 	}
-	c, e = FromString(c3)
+	c, e = ParseRGB(c3)
 	if e != nil {
 		t.Error(e)
 	}
@@ -40,4 +40,8 @@ func Test565(t *testing.T) {
 	if !reflect.DeepEqual(*From565(c2), c3) {
 		t.Errorf("c2 from 565 != c3")
 	}
+}
+
+func TestHSV(t *testing.T) {
+	fmt.Println(FromHSV(192, 90, 100).ToRGBString())
 }

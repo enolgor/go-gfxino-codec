@@ -114,7 +114,7 @@ func writeSkippableColor(i int, buf []byte, val string, colorMode bool) (int, er
 }
 
 func writeColor(i int, buf []byte, val string) (int, error) {
-	c, err := color.FromString(val)
+	c, err := color.ParseRGB(val)
 	if err != nil {
 		return -1, err
 	}
