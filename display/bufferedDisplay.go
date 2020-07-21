@@ -211,6 +211,15 @@ func (bd *BufferedDisplay) Print(text string) {
 	bd.writeText(text)
 }
 
+func (bd *BufferedDisplay) PrintBytes(text []byte) {
+	bd.Buffer.WriteByte(byte(commands.PRINT))
+	if len(text) > 255 {
+		text = text[:255]
+	}
+	bd.Buffer.WriteByte(byte(len(text)))
+	bd.Buffer.Write(text)
+}
+
 func (bd *BufferedDisplay) writeUint(v uint16) {
 	if !bd.Mode8Bit {
 		bd.Buffer.WriteByte(byte(v >> 8))

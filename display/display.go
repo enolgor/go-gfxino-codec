@@ -33,5 +33,6 @@ type Display interface {
 	SetTextSize(x uint8)
 	SetTextColor(fg *color.Color, bg *color.Color)
 	Print(text string)
+	PrintBytes(text []byte)
 	Read(p []byte) (int, error)
 }
