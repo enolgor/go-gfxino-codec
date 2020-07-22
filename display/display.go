@@ -36,14 +36,20 @@ type Display interface {
 	SetTextColor(fg *color.Color, bg *color.Color)
 	Print(text string)
 	PrintBytes(text []byte)
+	DrawImage(x0, y0 uint16, im image.Image)
 	Read(p []byte) (int, error)
 }
 
-func DrawImage(display Display, x0, y0 uint16, im image.Image) {
+func helperDrawImage(display Display, x0, y0 uint16, im image.Image) {
+	px := x0
+	py := y0
 	bounds := im.Bounds()
-	for x := uint16(bounds.Min.X); x < uint16(bounds.Max.X); x++ {
-		for y := uint16(bounds.Min.Y); y < uint16(bounds.Max.Y); y++ {
-			display.DrawPixel(x0+x, y0+y, color.FromColor(im.At(int(x), int(y))))
+	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		py = 0
+		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			display.DrawPixel(px, py, color.FromColor(im.At(x, y)))
+			py++
 		}
+		px++
 	}
 }

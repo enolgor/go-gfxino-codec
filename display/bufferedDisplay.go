@@ -2,6 +2,7 @@ package display
 
 import (
 	"bytes"
+	"image"
 
 	"github.com/enolgor/go-gfxino-codec/color"
 	"github.com/enolgor/go-gfxino-codec/commands"
@@ -218,6 +219,10 @@ func (bd *BufferedDisplay) PrintBytes(text []byte) {
 	}
 	bd.Buffer.WriteByte(byte(len(text)))
 	bd.Buffer.Write(text)
+}
+
+func (bd *BufferedDisplay) DrawImage(x0, y0 uint16, im image.Image) {
+	helperDrawImage(bd, x0, y0, im)
 }
 
 func (bd *BufferedDisplay) writeUint(v uint16) {
