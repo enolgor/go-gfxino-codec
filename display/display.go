@@ -1,6 +1,7 @@
 package display
 
 import (
+	"fmt"
 	"image"
 
 	"github.com/enolgor/go-gfxino-codec/color"
@@ -45,8 +46,9 @@ func helperDrawImage(display Display, x0, y0 uint16, im image.Image) {
 	py := y0
 	bounds := im.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
-		py = 0
+		py = y0
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			fmt.Println(x, y, px, py)
 			display.DrawPixel(px, py, color.FromColor(im.At(x, y)))
 			py++
 		}
